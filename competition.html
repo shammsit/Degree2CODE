@@ -17,26 +17,30 @@
     <button onclick="showForm('contact')">Contact Us</button>
   </div>
 
+
   <!-- LOGIN -->
   <form id="login" class="form">
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
+    <input type="email" placeholder="Email" required>
+    <input type="password" placeholder="Password" required>
+
     <button type="submit">Login</button>
 
     <p>
-      <a href="#">Forgot Username?</a> |
       <a href="#" onclick="resetPassword()">Forgot Password?</a>
     </p>
   </form>
 
+
   <!-- SIGNUP -->
   <form id="signup" class="form hidden">
-    <input type="text" placeholder="Full Name">
-    <input type="email" placeholder="Email">
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email" required>
+    <input type="text" placeholder="Username" required>
+    <input type="password" placeholder="Password" required>
+
     <button>Create Account</button>
   </form>
+
 
   <!-- CONTACT -->
   <form id="contact" class="form hidden">
@@ -46,36 +50,104 @@
     <button>Send Message</button>
   </form>
 
+
   <a href="index.html" class="back">⬅ Back Home</a>
 
 </div>
 
 
-<script>
-function showForm(id) {
-  document.querySelectorAll(".form").forEach(f => {
-    f.classList.add("hidden");
-  });
-  document.getElementById(id).classList.remove("hidden");
-}
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+<!-- ================================================= -->
+<!-- 🔥 FIREBASE AUTH ONLY (NO BILLING REQUIRED) -->
+<!-- ================================================= -->
+
+<script type="module">
+
+/* ========= CDN IMPORTS (important for HTML) ========= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+/* ========= YOUR FIREBASE CONFIG ========= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyDFZLqKmwGfJ2Q9HZUDzsLW5MQo7pv1YSY",
   authDomain: "c-competition-portal.firebaseapp.com",
   projectId: "c-competition-portal",
-  storageBucket: "c-competition-portal.firebasestorage.app",
-  messagingSenderId: "242421140127",
   appId: "1:242421140127:web:8e2dc9023bf8c5ec3530aa"
 };
 
-// Initialize Firebase
+
+/* ========= INIT ========= */
+
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+/* ========= TAB SWITCH ========= */
+
+window.showForm = function(id){
+  document.querySelectorAll(".form").forEach(f => f.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+
+/* ========= SIGNUP ========= */
+
+document.getElementById("signup").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+
+  const email = e.target[1].value;
+  const password = e.target[3].value;
+
+  try{
+    await createUserWithEmailAndPassword(auth, email, password);
+    alert("Signup successful! Please login.");
+    showForm("login");
+  }catch(err){
+    alert(err.message);
+  }
+});
+
+
+/* ========= LOGIN ========= */
+
+document.getElementById("login").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+
+  const email = e.target[0].value;
+  const password = e.target[1].value;
+
+  try{
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Login successful!");
+  }catch(err){
+    alert(err.message);
+  }
+});
+
+
+/* ========= FORGOT PASSWORD ========= */
+
+window.resetPassword = function(){
+  const email = prompt("Enter your email:");
+  if(!email) return;
+
+  sendPasswordResetEmail(auth, email)
+    .then(()=> alert("Password reset email sent!"));
+}
+
 </script>
+
 
 </body>
 </html>
