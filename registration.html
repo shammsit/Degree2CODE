@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Complete Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="card" style="width:500px">
+
+<h2>Competition Registration Form</h2>
+
+<form id="regForm" class="form">
+
+<!-- Photo -->
+<label>Upload Photo</label>
+<input type="file" accept="image/*" required>
+
+
+<input placeholder="Full Name" required>
+
+<select id="course">
+  <option value="">Select Course (coming soon)</option>
+</select>
+
+<input placeholder="Mobile Number" required>
+
+<button type="button" onclick="sendMobileOTP()">Send OTP</button>
+<input id="mobileOtp" placeholder="Enter Mobile OTP">
+
+
+<input placeholder="Email OTP" id="emailOtp">
+
+<input placeholder="School/College Name">
+<input placeholder="Parent Name">
+<input placeholder="Parent Email">
+<textarea placeholder="Address"></textarea>
+
+<select>
+  <option>ID Type (optional)</option>
+  <option>Aadhar</option>
+  <option>Voter ID</option>
+  <option>School ID</option>
+</select>
+
+<input placeholder="ID Number">
+
+<label>Upload ID Front</label>
+<input type="file" required>
+
+<label>Upload ID Back</label>
+<input type="file" required>
+
+<p id="captchaQ"></p>
+<input id="captchaA" placeholder="Captcha answer">
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+
+
+<!-- EMAILJS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+
+<script>
+
+/* ============ INIT EMAILJS ============ */
+/* create free account at emailjs.com */
+emailjs.init("aURxlQHmUdWtucuZA");
+
+
+/* ============ CAPTCHA ============ */
+
+let a = Math.floor(Math.random()*10);
+let b = Math.floor(Math.random()*10);
+
+document.getElementById("captchaQ").innerText =
+`Captcha: ${a} + ${b} = ?`;
+
+let captchaAns = a+b;
+
+
+/* ============ OTP SIMULATION ============ */
+
+let mobileCode = Math.floor(1000 + Math.random()*9000);
+
+function sendMobileOTP(){
+  alert("Demo OTP: " + mobileCode);
+}
+
+
+/* ============ FORM SUBMIT ============ */
+
+document.getElementById("regForm").addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  if(document.getElementById("captchaA").value != captchaAns){
+    alert("Captcha wrong ❌");
+    return;
+  }
+
+  if(document.getElementById("mobileOtp").value != mobileCode){
+    alert("Mobile OTP wrong ❌");
+    return;
+  }
+
+  if(!confirm("Confirm Submission?")) return;
+
+
+  const data = {
+    name: this[1].value,
+    mobile: this[3].value,
+    college: this[6].value,
+    parent: this[7].value,
+    address: this[9].value
+  };
+
+
+  /* Save locally (temporary dashboard view) */
+  localStorage.setItem("regData", JSON.stringify(data));
+
+
+  /* Send email copy */
+  emailjs.send("service_fng2ktc","__ejs-test-mail-service__", data);
+
+  alert("Submission successful ✅");
+
+  window.location.href = "dashboard.html";
+});
+
+</script>
+
+</body>
+</html>
