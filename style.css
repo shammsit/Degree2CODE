@@ -1,41 +1,47 @@
-/* ===============================
-   GLOBAL RESET
-================================ */
+/* ================= RESET ================= */
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+
+/* ================= BODY ================= */
 
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 30px;
   background: linear-gradient(135deg, #4e73df, #1cc88a);
 
-  /* IMPORTANT: allow scroll */
-  min-height: 100vh;
+  /* ✅ allow unlimited height */
+  height: auto;
+  min-height: 100%;
+
+  /* ✅ scrolling enabled */
+  overflow-y: auto;
+
+  padding: 40px 0;
 }
 
 
-
-/* ===============================
-   CARD CONTAINER
-================================ */
+/* ================= CARD ================= */
 
 .card {
   background: white;
-  max-width: 520px;
-  margin: auto;
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+
+  /* ✅ center WITHOUT flex */
+  width: 95%;
+  max-width: 550px;
+  margin: 0 auto;
+
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
 }
 
 
 
-/* ===============================
-   HEADINGS
-================================ */
+/* ================= HEADINGS ================= */
 
 h1, h2, h3 {
   text-align: center;
@@ -44,38 +50,10 @@ h1, h2, h3 {
 
 
 
-/* ===============================
-   TABS (Login/Signup buttons)
-================================ */
-
-.tabs {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.tabs button {
-  padding: 8px 14px;
-  margin: 4px;
-  border: none;
-  background: #4e73df;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.tabs button:hover {
-  background: #2e59d9;
-}
-
-
-
-/* ===============================
-   FORM LAYOUT
-================================ */
+/* ================= FORM ================= */
 
 .form {
-  display: flex;
-  flex-direction: column;
+  display: block;   /* IMPORTANT: no flex */
 }
 
 .form input,
@@ -83,38 +61,25 @@ h1, h2, h3 {
 .form select {
   width: 100%;
   padding: 10px;
-  margin: 6px 0;
+  margin: 8px 0;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 14px;
 }
 
 
 
-/* ===============================
-   FILE INPUT
-================================ */
-
-input[type="file"] {
-  background: #f3f3f3;
-  padding: 8px;
-}
-
-
-
-/* ===============================
-   BUTTONS
-================================ */
+/* ================= BUTTON ================= */
 
 button {
+  width: 100%;
   padding: 10px;
   margin-top: 8px;
   border: none;
   border-radius: 6px;
   font-weight: bold;
-  cursor: pointer;
   background: #1cc88a;
   color: white;
+  cursor: pointer;
 }
 
 button:hover {
@@ -123,25 +88,32 @@ button:hover {
 
 
 
-/* ===============================
-   SMALL LINKS
-================================ */
+/* ================= TABS ================= */
+
+.tabs {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.tabs button {
+  width: auto;
+  padding: 7px 12px;
+  margin: 3px;
+  background: #4e73df;
+}
+
+
+
+/* ================= LINKS ================= */
 
 a {
-  text-decoration: none;
   color: #4e73df;
   font-size: 13px;
 }
 
-a:hover {
-  text-decoration: underline;
-}
 
 
-
-/* ===============================
-   HIDDEN CLASS (tab switch)
-================================ */
+/* ================= HIDDEN ================= */
 
 .hidden {
   display: none;
@@ -149,45 +121,16 @@ a:hover {
 
 
 
-/* ===============================
-   CAPTCHA TEXT
-================================ */
-
-#captchaQ {
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-
-
-/* ===============================
-   DASHBOARD DETAILS BOX
-================================ */
-
-#details {
-  background: #f8f9fc;
-  padding: 12px;
-  border-radius: 6px;
-  margin: 10px 0;
-}
-
-
-
-/* ===============================
-   MOBILE RESPONSIVE
-================================ */
+/* ================= MOBILE ================= */
 
 @media (max-width: 600px) {
 
   body {
-    padding: 12px;
+    padding: 15px 0;
   }
 
   .card {
+    width: 96%;
     padding: 18px;
-  }
-
-  button {
-    font-size: 14px;
   }
 }
