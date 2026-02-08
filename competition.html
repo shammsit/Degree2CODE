@@ -1,17 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Competition</title>
+  <title>C Programming Competition</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Basic C Programming Competition</h1>
-    <p>Competition details coming soon...</p>
+<div class="card">
 
-    <a href="index.html" class="btn">⬅ Back Home</a>
+  <h2>Basic C Programming Competition</h2>
+
+  <!-- Buttons -->
+  <div class="tabs">
+    <button onclick="showForm('login')">Login</button>
+    <button onclick="showForm('signup')">Signup</button>
+    <button onclick="showForm('contact')">Contact Us</button>
   </div>
+
+
+  <!-- LOGIN -->
+  <form id="login" class="form">
+    <input type="text" placeholder="Username" required>
+    <input type="password" placeholder="Password" required>
+
+    <button type="submit">Login</button>
+
+    <p class="links">
+      <a href="#">Forgot Username?</a> |
+      <a href="#">Forgot Password?</a>
+    </p>
+  </form>
+
+
+  <!-- SIGNUP -->
+  <form id="signup" class="form hidden">
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email" required>
+    <input type="text" placeholder="Username" required>
+    <input type="password" placeholder="Password" required>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+
+  <!-- CONTACT -->
+  <form id="contact" class="form hidden">
+    <input type="text" placeholder="Your Name">
+    <input type="email" placeholder="Your Email">
+    <textarea placeholder="Message"></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+
+  <a href="index.html" class="back">⬅ Back Home</a>
+
+</div>
+
+
+<script>
+function showForm(id) {
+  document.querySelectorAll(".form").forEach(f => {
+    f.classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+}
+</script>
 
 </body>
 </html>
