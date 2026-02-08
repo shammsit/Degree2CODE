@@ -1,3 +1,7 @@
+/* ===============================
+   GLOBAL RESET
+================================ */
+
 * {
   box-sizing: border-box;
 }
@@ -5,31 +9,53 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 30px;
   background: linear-gradient(135deg, #4e73df, #1cc88a);
+
+  /* IMPORTANT: allow scroll */
+  min-height: 100vh;
 }
 
-/* Card */
+
+
+/* ===============================
+   CARD CONTAINER
+================================ */
+
 .card {
   background: white;
-  width: 360px;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-  text-align: center;
+  max-width: 520px;
+  margin: auto;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
 
-/* Tabs */
+
+
+/* ===============================
+   HEADINGS
+================================ */
+
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+
+/* ===============================
+   TABS (Login/Signup buttons)
+================================ */
+
 .tabs {
-  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .tabs button {
-  margin: 3px;
-  padding: 8px 12px;
+  padding: 8px 14px;
+  margin: 4px;
   border: none;
   background: #4e73df;
   color: white;
@@ -37,39 +63,131 @@ body {
   cursor: pointer;
 }
 
-/* Forms */
+.tabs button:hover {
+  background: #2e59d9;
+}
+
+
+
+/* ===============================
+   FORM LAYOUT
+================================ */
+
 .form {
   display: flex;
   flex-direction: column;
 }
 
 .form input,
-.form textarea {
+.form textarea,
+.form select {
   width: 100%;
-  margin: 6px 0;
   padding: 10px;
+  margin: 6px 0;
   border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-.form button {
-  margin-top: 8px;
-  padding: 10px;
-  background: #1cc88a;
-  border: none;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
+
+
+/* ===============================
+   FILE INPUT
+================================ */
+
+input[type="file"] {
+  background: #f3f3f3;
+  padding: 8px;
 }
+
+
+
+/* ===============================
+   BUTTONS
+================================ */
+
+button {
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #1cc88a;
+  color: white;
+}
+
+button:hover {
+  background: #17a673;
+}
+
+
+
+/* ===============================
+   SMALL LINKS
+================================ */
+
+a {
+  text-decoration: none;
+  color: #4e73df;
+  font-size: 13px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+
+/* ===============================
+   HIDDEN CLASS (tab switch)
+================================ */
 
 .hidden {
   display: none;
 }
 
-.back {
-  display: block;
-  margin-top: 15px;
-  color: #4e73df;
-  text-decoration: none;
+
+
+/* ===============================
+   CAPTCHA TEXT
+================================ */
+
+#captchaQ {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+
+
+/* ===============================
+   DASHBOARD DETAILS BOX
+================================ */
+
+#details {
+  background: #f8f9fc;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  button {
+    font-size: 14px;
+  }
 }
