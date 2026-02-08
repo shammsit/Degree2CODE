@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basic C Programming Competition</title>
+  <title>Competition Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,56 +14,48 @@
   <div class="tabs">
     <button onclick="showForm('login')">Login</button>
     <button onclick="showForm('signup')">Signup</button>
-    <button onclick="showForm('contact')">Contact Us</button>
   </div>
 
 
   <!-- LOGIN -->
   <form id="login" class="form">
+
     <input type="email" placeholder="Email" required>
     <input type="password" placeholder="Password" required>
+
+    <!-- CAPTCHA -->
+    <p id="captchaQuestion"></p>
+    <input type="number" id="captchaAnswer" placeholder="Solve captcha" required>
 
     <button type="submit">Login</button>
 
     <p>
       <a href="#" onclick="resetPassword()">Forgot Password?</a>
     </p>
+
   </form>
+
 
 
   <!-- SIGNUP -->
   <form id="signup" class="form hidden">
+
     <input type="text" placeholder="Full Name" required>
     <input type="email" placeholder="Email" required>
-    <input type="text" placeholder="Username" required>
     <input type="password" placeholder="Password" required>
 
     <button>Create Account</button>
+
   </form>
 
-
-  <!-- CONTACT -->
-  <form id="contact" class="form hidden">
-    <input type="text" placeholder="Your Name">
-    <input type="email" placeholder="Your Email">
-    <textarea placeholder="Message"></textarea>
-    <button>Send Message</button>
-  </form>
-
-
-  <a href="index.html" class="back">⬅ Back Home</a>
 
 </div>
 
 
 
-<!-- ================================================= -->
-<!-- 🔥 FIREBASE AUTH ONLY (NO BILLING REQUIRED) -->
-<!-- ================================================= -->
+<!-- ================= FIREBASE AUTH ================= -->
 
 <script type="module">
-
-/* ========= CDN IMPORTS (important for HTML) ========= */
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -72,13 +64,14 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-/* ========= YOUR FIREBASE CONFIG ========= */
 
+/* 🔥 YOUR CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDFZLqKmwGfJ2Q9HZUDzsLW5MQo7pv1YSY",
   authDomain: "c-competition-portal.firebaseapp.com",
@@ -87,13 +80,22 @@ const firebaseConfig = {
 };
 
 
-/* ========= INIT ========= */
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 
-/* ========= TAB SWITCH ========= */
+
+/* ================= CAPTCHA ================= */
+
+let a = Math.floor(Math.random()*10);
+let b = Math.floor(Math.random()*10);
+let correctAnswer = a + b;
+
+document.getElementById("captchaQuestion").innerText =
+`Captcha: ${a} + ${b} = ?`;
+
+
+/* ================= TAB SWITCH ================= */
 
 window.showForm = function(id){
   document.querySelectorAll(".form").forEach(f => f.classList.add("hidden"));
@@ -101,53 +103,71 @@ window.showForm = function(id){
 }
 
 
-/* ========= SIGNUP ========= */
+
+/* ================= SIGNUP ================= */
 
 document.getElementById("signup").addEventListener("submit", async (e)=>{
   e.preventDefault();
 
   const email = e.target[1].value;
-  const password = e.target[3].value;
+  const password = e.target[2].value;
 
   try{
     await createUserWithEmailAndPassword(auth, email, password);
-    alert("Signup successful! Please login.");
+    alert("Signup successful!");
     showForm("login");
-  }catch(err){
+  }
+  catch(err){
     alert(err.message);
   }
 });
 
 
-/* ========= LOGIN ========= */
+
+/* ================= LOGIN ================= */
 
 document.getElementById("login").addEventListener("submit", async (e)=>{
   e.preventDefault();
 
   const email = e.target[0].value;
   const password = e.target[1].value;
+  const captcha = document.getElementById("captchaAnswer").value;
+
+  if(captcha != correctAnswer){
+    alert("Captcha incorrect ❌");
+    return;
+  }
 
   try{
     await signInWithEmailAndPassword(auth, email, password);
-    alert("Login successful!");
-  }catch(err){
-    alert(err.message);
+    window.location.href = "dashboard.html";
+  }
+  catch(err){
+
+    // Custom friendly messages
+    if(err.code === "auth/user-not-found"){
+      alert("Email not registered ❌");
+    }
+    else if(err.code === "auth/wrong-password"){
+      alert("Wrong password ❌");
+    }
+    else{
+      alert(err.message);
+    }
   }
 });
 
 
-/* ========= FORGOT PASSWORD ========= */
+
+/* ================= FORGOT PASSWORD ================= */
 
 window.resetPassword = function(){
   const email = prompt("Enter your email:");
-  if(!email) return;
-
   sendPasswordResetEmail(auth, email)
-    .then(()=> alert("Password reset email sent!"));
+    .then(()=> alert("Reset email sent!"));
 }
 
 </script>
-
 
 </body>
 </html>
